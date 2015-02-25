@@ -1,0 +1,18 @@
+%h1 Checkout
+
+%h2 You are checking out the following products
+
+%ul
+  -@cart.items.each do |item|
+    %li
+      %em=item.quantity
+      =item.product.name
+      =item.total_price
+%p
+  %strong
+    Total price:
+    =number_to_currency @cart.total_price
+
+=form_for @order_form, url: orders_path do |f|
+	=f.fields_for :user, @order_form.user do |u|
+		%p
