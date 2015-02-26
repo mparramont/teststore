@@ -18,7 +18,7 @@ We have stored your order with the id of #{@order_form.order.id}.
 You should receive an email with the order details and password change.<br/>
 However, something went wrong with your credit card, please add another one.
 EOF
-        redirect_to new_payment_order_path(@order_form.order)
+        #redirect_to new_payment_order_path(@order_form.order)
       end
     else
       render "carts/checkout"

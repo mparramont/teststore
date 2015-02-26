@@ -1,5 +1,5 @@
 class OrderMailer < ActionMailer::Base
-  default from: "tutsplus@josemota.net"
+  default from: "cassio.kawakita@gmail.com"
 
   def order_confirmation order
     @order = order

@@ -31,4 +31,12 @@
         %p.col-md-3=u.text_field :city, placeholder: "City", class: "form-control"
       %p=u.country_select :country, { priority_countries: [ "BR", "US", "DE", "ES", "PT" ] }, { class: "form-control" }
 
+
+  #dropin
+
   %p=f.submit "Place order", class: "btn btn-primary"
+
+:javascript
+  braintree.setup("#{@client_token}", 'dropin', {
+    container: 'dropin'
+  });

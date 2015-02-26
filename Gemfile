@@ -18,7 +18,8 @@ gem 'carrierwave'
 gem 'mini_magick'
 gem 'devise'
 gem 'country_select'
-
+gem 'figaro'
+gem 'braintree'
 
 group :test do
   gem 'factory_girl_rails'

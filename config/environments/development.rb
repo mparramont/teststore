@@ -14,7 +14,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -46,11 +46,13 @@ Rails.application.configure do
     address: ENV["SMTP_ADDRESS"],
     user_name: ENV["SMTP_USER"],
     password: ENV["SMTP_PASSWORD"],
-    domain: "josemota.net",
     authentication: :plain,
-    enable_starttls_auto: false
+    enable_starttls_auto: true
   }
 
-
+Braintree::Configuration.environment = :sandbox
+Braintree::Configuration.merchant_id = "tyzrj2b3rjck2c7h"
+Braintree::Configuration.public_key = "ddzb5ws5cprjxh8k"
+Braintree::Configuration.private_key = "c37e8c5a35181a95b847775d99d6dc7e"
 
 end
