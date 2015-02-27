@@ -10,16 +10,16 @@ class OrdersController < ApplicationController
 
     if @order_form.save
       notify_user
-      if false#charge_user
+      #if false#charge_user
         redirect_to root_path, notice: "Thank you for placing the order."
-      else
+      #else
         flash[:warning] = <<EOF
 We have stored your order with the id of #{@order_form.order.id}.
 You should receive an email with the order details and password change.<br/>
 However, something went wrong with your credit card, please add another one.
 EOF
         #redirect_to new_payment_order_path(@order_form.order)
-      end
+      #end
     else
       render "carts/checkout"
     end

@@ -46,9 +46,12 @@ Rails.application.configure do
     address: ENV["SMTP_ADDRESS"],
     user_name: ENV["SMTP_USER"],
     password: ENV["SMTP_PASSWORD"],
+    domain: "gmail.com",
+    port: '587',
     authentication: :plain,
     enable_starttls_auto: true
-  }
+    
+   }
 
 Braintree::Configuration.environment = :sandbox
 Braintree::Configuration.merchant_id = "tyzrj2b3rjck2c7h"
