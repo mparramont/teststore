@@ -12,4 +12,12 @@ class ApplicationController < ActionController::Base
     @categories = Category.all
   end
 
+  def authenticate_admin!
+    authenticate_user!
+
+    unless current_user.admin?
+      redirect_to root_path, alert: "You are not allowed to perform the operation"
+    end
+  end
+
 end
