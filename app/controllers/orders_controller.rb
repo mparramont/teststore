@@ -28,6 +28,15 @@ EOF
     end
   end
 
+  def update
+    @order = Order.find params[:id]
+    @previous_state = @order.state
+
+    if @order.update state_order_params
+      notify_user_about_state
+      redirect_to orders_path, notice: "Order was updated."
+    end
+  end
 
   def new_payment
     @order = Order.find params[:id]
@@ -52,10 +61,13 @@ EOF
     OrderMailer.order_confirmation(@order_form.order).deliver
   end
 
+  def notify_user_about_state
+    OrderMailer.state_changed(@order, @previous_state).deliver
+  end
 
   def order_params
     params.require(:order_form).permit(
-      user: [ :name, :address, :city, :country, :postal_code, :email ]
+      user: [ :name, :phone, :address, :city, :country, :postal_code, :email ]
     )
   end
 

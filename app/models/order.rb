@@ -6,5 +6,8 @@ class Order < ActiveRecord::Base
     order_items.inject(0) { |sum, item| sum + item.total_price }
   end
 
+  STATES = [
+    [ "New", :new ],
+    [ "Dispatched", :dispatched ]
+  ]
 end
-
