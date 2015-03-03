@@ -27,6 +27,37 @@
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
+
+  <div class="field">
+    <%= f.label :name %> <i>(Digite o nome do seu usuario)</i><br />
+    <%= f.text_field :name, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %> <i>(Digite o seu endereço)</i><br />
+    <%= f.text_field :address, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :postal_code %> <i>(Digite o seu CEP)</i><br />
+    <%= f.text_field :postal_code, autocomplete: "off" %>
+  </div>
+
+   <div class="field">
+    <%= f.label :phone %> <i>(Digite o seu telefone)</i><br />
+    <%= f.text_field :phone, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :city %> <i>(Digite o nome da sua cidade)</i><br />
+    <%= f.text_field :city, autocomplete: "off" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :country %> <i>(Digite o nome de seu pais)</i><br />
+    <%= f.country_select :country, { priority_countries: [ "BR", "US", "DE", "ES", "PT" ] }, autocomplete: "off" %>
+  </div>
+
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
