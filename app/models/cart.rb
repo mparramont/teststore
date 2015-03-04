@@ -1,5 +1,5 @@
 class Cart
-	attr_reader  :items
+  attr_reader :items
 
   def self.build_from_hash hash
     items = if hash["cart"] then
@@ -34,7 +34,6 @@ class Cart
     @items.length
   end
 
-  
   def serialize
     items = @items.map do |item|
       {
@@ -49,6 +48,6 @@ class Cart
   end
 
   def total_price
-    @items.inject(0) {|sum, item| sum+item.total_price}
+    @items.inject(0) { |sum, item| sum + item.total_price }
   end
 end
