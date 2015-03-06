@@ -1,41 +1,63 @@
 %h1 Checkout
 
-%h2 You are checking out the following products:
+%h3 You are checking out the following products:
 
-%ul
-  -@cart.items.each do |item|
-    %li
-      %em=item.quantity
-      =item.product.name
-      =number_to_currency item.total_price
+- if user_signed_in?
+  Logged in as #{current_user.name} |
 
-%p
-  %strong
-    Total price:
-    =number_to_currency @cart.total_price
+  %ul
+    -@cart.items.each do |item|
+      %li
+        %em=item.quantity
+        =item.product.name
+        =number_to_currency item.total_price
 
-=form_for @order_form, url: orders_path do |f|
-  =render "orders/errors"
+  %p
+    %strong
+      Total price:
+      =number_to_currency @cart.total_price
 
-  %h3 Some of your personal details
-  =f.fields_for :user, f.object.user do |u|
-    .form-group
-      %p=u.text_field :name, :value => "#{current_user.name}", class: "form-control"
-      %p
-        =u.text_field :email, :value => "#{current_user.email}", class: "form-control"
-        %span.help-block This will help you track your order more effectively.
+  =form_for @order_form, url: orders_path do |f|
+    =render "orders/errors"
 
-    .form-group
-      .row
-        %p.col-md-6=u.text_field :address, :value => "#{current_user.address}", class: "form-control"
-        %p.col-md-3=u.text_field :postal_code, :value => "#{current_user.postal_code}", class: "form-control"
-        %p.col-md-3=u.text_field :city, :value => "#{current_user.city}", class: "form-control"
-      %p=u.country_select :country, { priority_countries: [ "BR", "US", "DE", "ES", "PT" ] }, { class: "form-control" }
+    %h3 Some of your personal details
+    =f.fields_for :user, f.object.user do |u|
+      .form-group
+        %p=u.text_field :name, :value => "#{current_user.name}",placeholder: "Name", class: "form-control input-lg"
+        %p
+          =u.text_field :email,:value => "#{current_user.email}", placeholder: "Email", class: "form-control"
+          %span.help-block This will help you track your order more effectively.
+      .form-group
+        .row
+          %p.col-md-6=u.text_field :address, :value => "#{current_user.address}",placeholder: "Address", class: "form-control"
+          %p.col-md-3=u.text_field :postal_code, :value => "#{current_user.postal_code}", placeholder: "Postal code / Zipcode", class: "form-control"
+          %p.col-md-3=u.text_field :city, :value => "#{current_user.city}", placeholder: "City", class: "form-control"
+        %p=u.country_select :country, { priority_countries: [ "BR", "US", "DE", "ES", "PT" ] }, { class: "form-control" }
 
 
-  #dropin
+    #dropin
 
-  %p=f.submit "Place order", class: "btn btn-primary"
+    %p=f.submit "Place order", class: "btn btn-primary"
+
+- else
+
+  
+  %ul
+    -@cart.items.each do |item|
+      %li
+        %em=item.quantity
+        =item.product.name
+        =number_to_currency item.total_price
+
+
+    %p
+      %strong
+        Total price:
+        =number_to_currency @cart.total_price
+
+  
+  = link_to "Login", new_user_session_path, class: "btn btn-primary"
+
 
 :javascript
   braintree.setup("#{@client_token}", 'dropin', {

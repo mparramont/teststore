@@ -22,6 +22,7 @@ class OrderForm
 
 
   private
+  
 
   def valid?
     user.valid?

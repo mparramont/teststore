@@ -4,7 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates_presence_of :name, :address, :city, :country, :postal_code
+  validates_presence_of :name, :address, :city, :postal_code
+
+  has_many :orders
 
   def full_address
   <<EOF

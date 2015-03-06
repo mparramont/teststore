@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   resources :categories
 
-  resources :categories
+  devise_for :users, :controllers => { registrations: 'registrations' }# NOTE: put this after the 'devise_for :users' line
+  resources :users, only: [:index]
 
-  devise_for :users
+
+  
+
   resources :products
 
   resource :cart, only: [ :show ] do
