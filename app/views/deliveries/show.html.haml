@@ -1,0 +1,10 @@
+%p
+  %b Time:
+  = @delivery.time
+%p
+  %b User:
+  = @delivery.user.name
+
+= link_to 'Edit', edit_delivery_path(@delivery)
+\|
+= link_to 'Back', deliveries_path

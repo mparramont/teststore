@@ -1,0 +1,15 @@
+= form_for @pick_up do |f|
+  - if @pick_up.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pick_up.errors.count, "error")} prohibited this pick up from being saved:"
+      %ul
+        - @pick_up.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :time
+    = f.datetime_select :time
+    = f.hidden_field :type
+
+  .actions
+    = f.submit 'Save'

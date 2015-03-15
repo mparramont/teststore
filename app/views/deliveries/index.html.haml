@@ -1,0 +1,19 @@
+%h1 Listing deliveries
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @deliveries.each do |delivery|
+      %tr
+        %td= link_to 'Show', delivery
+        %td= link_to 'Edit', edit_delivery_path(delivery)
+        %td= link_to 'Destroy', delivery, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Schedule Delivery', new_delivery_path
