@@ -1,0 +1,26 @@
+%h1 All users
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th ID
+      %th Name
+      %th Email
+      %th Address
+      %th City
+      %th Country
+      %th Postal Code
+
+  - @users.each do |user|
+    %tr
+      %td=user.id
+      %td=user.name
+      %td=user.email
+      %td=user.address
+      %td=user.city
+      %td=user.country
+      %td=user.postal_code
+      
+      
+
+      

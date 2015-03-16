@@ -6,17 +6,17 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order_form = OrderForm.new(
+   @order_form = OrderForm.new(
       user: User.new(order_params[:user]),
       cart: @cart
     )
 
-    if @order_form.save
-      notify_user
-      if false#charge_user
-        redirect_to root_path, notice: "Thank you for placing the order."
-      else
-        flash[:warning] = <<EOF
+  if @order_form.save
+    notify_user
+    if false#charge_user
+      redirect_to root_path, notice: "Thank you for placing the order."
+   else
+      flash[:warning] = <<EOF
 We have stored your order with the id of #{@order_form.order.id}.
 You should receive an email with the order details and password change.<br/>
 However, something went wrong with your credit card, please add another one.
@@ -27,6 +27,10 @@ EOF
       render "carts/checkout"
     end
   end
+
+
+
+
 
   def update
     @order = Order.find params[:id]
