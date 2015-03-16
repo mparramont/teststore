@@ -26,6 +26,8 @@
           <% end %>
         </ul>
       </li>
+      <li><%= link_to "Schedule Pick Up", new_pick_up_path %></li>
+      <li><%= link_to "Schedule Delivery", new_delivery_path %></li>
     </ul>
     <p class="navbar-text navbar-right">
       <% if user_signed_in? %>

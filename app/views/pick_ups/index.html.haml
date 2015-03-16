@@ -1,0 +1,21 @@
+%h1 Listing pick_ups
+
+%table
+  %thead
+    %tr
+      %th Date
+      %th
+      %th
+      %th
+
+  %tbody
+    - @pick_ups.each do |pick_up|
+      %tr
+        %td= pick_up.time
+        %td= link_to 'Show', pick_up
+        %td= link_to 'Edit', edit_pick_up_path(pick_up)
+        %td= link_to 'Destroy', pick_up, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'Schedule Pick up', new_pick_up_path

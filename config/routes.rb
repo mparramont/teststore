@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
+  resources :deliveries
+
+  resources :pick_ups
+
   resources :categories
 
   devise_for :users, :controllers => { registrations: 'registrations' }# NOTE: put this after the 'devise_for :users' line
   resources :users, only: [:index]
 
 
-  
+
 
   resources :products
 
@@ -20,7 +24,7 @@ Rails.application.routes.draw do
       post :pay
     end
   end
-  
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
