@@ -8,6 +8,8 @@ class OrdersController < ApplicationController
   def create
    @order_form = OrderForm.new(
       user: User.new(order_params[:user]),
+      pick_up: PickUp.new(order_params[:pick_up]),
+      delivery: Delivery.new(order_params[:delivery]),
       cart: @cart
     )
 
@@ -61,17 +63,19 @@ EOF
   private
 
   def notify_user
-    @order_form.user.send_reset_password_instructions
-    OrderMailer.order_confirmation(@order_form.order).deliver
+    # @order_form.user.send_reset_password_instructions
+    # OrderMailer.order_confirmation(@order_form.order).deliver
   end
 
   def notify_user_about_state
-    OrderMailer.state_changed(@order, @previous_state).deliver
+    # OrderMailer.state_changed(@order, @previous_state).deliver
   end
 
   def order_params
     params.require(:order_form).permit(
-      user: [ :name, :phone, :address, :city, :country, :postal_code, :email ]
+      user: [ :name, :phone, :address, :city, :country, :postal_code, :email ],
+      pick_up: [ :time ],
+      delivery: [ :time ]
     )
   end
 

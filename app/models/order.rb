@@ -1,6 +1,8 @@
 class Order < ActiveRecord::Base
 
   belongs_to :user
+  belongs_to :pick_up
+  belongs_to :delivery
   has_many :order_items
 
 
