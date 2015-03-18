@@ -7,13 +7,9 @@ class OrdersController < ApplicationController
 
   def create
    @order_form = OrderForm.new(
-<<<<<<< HEAD
       user: current_user,
-=======
-      user: User.new(order_params[:user]),
       pick_up: PickUp.new(order_params[:pick_up]),
       delivery: Delivery.new(order_params[:delivery]),
->>>>>>> a5459947c4f8d4d2005e520e927b9bf4bdd71044
       cart: @cart
     )
 
@@ -57,6 +53,7 @@ EOF
     @order = Order.find params[:id]
     transaction = OrderTransaction.new @order, params[:payment_method_nonce]
     transaction.execute
+    
     if transaction.ok?
       redirect_to root_path, notice: "Thank you for placing the order."
     else
@@ -67,32 +64,23 @@ EOF
   private
 
   def notify_user
-<<<<<<< HEAD
     if user_signed_in?
       OrderMailer.order_confirmation(@order_form.order).deliver
     else  
-    @order_form.user.send_reset_password_instructions
-    OrderMailer.order_confirmation(@order_form.order).deliver
+      @order_form.user.send_reset_password_instructions
+      OrderMailer.order_confirmation(@order_form.order).deliver
     end
-=======
-    # @order_form.user.send_reset_password_instructions
-    # OrderMailer.order_confirmation(@order_form.order).deliver
->>>>>>> a5459947c4f8d4d2005e520e927b9bf4bdd71044
   end
 
   def notify_user_about_state
-    # OrderMailer.state_changed(@order, @previous_state).deliver
+    OrderMailer.state_changed(@order, @previous_state).deliver
   end
 
   def order_params
     params.require(:order_form).permit(
-<<<<<<< HEAD
-      user: [ :name, :phone, :email, :address, :city, :country, :postal_code, :email ]
-=======
-      user: [ :name, :phone, :address, :city, :country, :postal_code, :email ],
+      user: [ :name, :phone, :email, :address, :city, :country, :postal_code, :email ],
       pick_up: [ :time ],
       delivery: [ :time ]
->>>>>>> a5459947c4f8d4d2005e520e927b9bf4bdd71044
     )
   end
 
