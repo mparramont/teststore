@@ -1,9 +1,9 @@
 class OrderForm
-  
+
   include ActiveModel::Model
 
 
-  attr_accessor :user, :order # credit_card
+  attr_accessor :user, :order, :pick_up, :delivery # credit_card
   attr_writer :cart
 
   def save
@@ -27,12 +27,16 @@ class OrderForm
   
 
   def valid?
-    user.valid?
+    user.valid? &&
+    pick_up.valid? &&
+    delivery.valid?
   end
 
   def persist
     user.save
-    @order = Order.create! user: user
+    pick_up.save
+    delivery.save
+    @order = Order.create! user: user, pick_up: pick_up, delivery: delivery
 
     build_order_items
   end

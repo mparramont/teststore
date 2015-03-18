@@ -20,6 +20,18 @@
   =form_for @order_form, url: orders_path do |f|
     =render "orders/errors"
 
+    %h3 Schedule pick up date
+    = fields_for :pick_up do |f|
+      .form_group
+        = f.datetime_select :time
+        = f.hidden_field :type
+
+    %h3 Schedule delivery date
+    = fields_for :delivery do |f|
+      .form_group
+        = f.datetime_select :time
+        = f.hidden_field :type
+
     %h3 Some of your personal details
     =f.fields_for :user, f.object.user do |u|
       .form-group
