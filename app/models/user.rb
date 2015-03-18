@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   validates_presence_of :name, :email, :address, :city, :postal_code
   has_many :orders
+  has_many :order_items
 
   def full_address
   <<EOF

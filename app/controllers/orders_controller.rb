@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 
   def create
    @order_form = OrderForm.new(
-      user: User.new(order_params[:user]),
+      user: current_user,
       cart: @cart
     )
 
@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     notify_user
     if false#charge_user
       redirect_to root_path, notice: "Thank you for placing the order."
-   else
+    else
       flash[:warning] = <<EOF
 We have stored your order with the id of #{@order_form.order.id}.
 You should receive an email with the order details and password change.<br/>
@@ -61,8 +61,12 @@ EOF
   private
 
   def notify_user
+    if user_signed_in?
+      OrderMailer.order_confirmation(@order_form.order).deliver
+    else  
     @order_form.user.send_reset_password_instructions
     OrderMailer.order_confirmation(@order_form.order).deliver
+    end
   end
 
   def notify_user_about_state
@@ -71,7 +75,7 @@ EOF
 
   def order_params
     params.require(:order_form).permit(
-      user: [ :name, :phone, :address, :city, :country, :postal_code, :email ]
+      user: [ :name, :phone, :email, :address, :city, :country, :postal_code, :email ]
     )
   end
 
