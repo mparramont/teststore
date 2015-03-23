@@ -7,7 +7,6 @@ class OrderForm
   attr_writer :cart
 
   def save
-    set_password_for_user
     if valid?
       persist
       true
@@ -24,7 +23,7 @@ class OrderForm
 
 
   private
-  
+
 
   def valid?
     user.valid? &&

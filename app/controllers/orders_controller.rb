@@ -13,14 +13,14 @@ class OrdersController < ApplicationController
       cart: @cart
     )
 
-  if @order_form.save
-    notify_user
-    if false#charge_user
-      redirect_to root_path, notice: "Thank you for placing the order."
-    else
-      flash[:warning] = <<EOF
+    if @order_form.save
+      notify_user
+      if pay_order!(@order_form.order)
+        redirect_to root_path, notice: "Thank you for placing the order."
+      else
+        flash[:warning] = <<EOF
 We have stored your order with the id of #{@order_form.order.id}.
-You should receive an email with the order details and password change.<br/>
+You should receive an email with the order details.<br/>
 However, something went wrong with your credit card, please add another one.
 EOF
         redirect_to new_payment_order_path(@order_form.order)
@@ -29,10 +29,6 @@ EOF
       render "carts/checkout"
     end
   end
-
-
-
-
 
   def update
     @order = Order.find params[:id]
@@ -53,7 +49,7 @@ EOF
     @order = Order.find params[:id]
     transaction = OrderTransaction.new @order, params[:payment_method_nonce]
     transaction.execute
-    
+
     if transaction.ok?
       redirect_to root_path, notice: "Thank you for placing the order."
     else
@@ -63,10 +59,17 @@ EOF
 
   private
 
+  def pay_order!(order)
+    transaction = OrderTransaction.new order, params[:payment_method_nonce]
+    transaction.execute
+
+    transaction.ok?
+  end
+
   def notify_user
     if user_signed_in?
       OrderMailer.order_confirmation(@order_form.order).deliver
-    else  
+    else
       @order_form.user.send_reset_password_instructions
       OrderMailer.order_confirmation(@order_form.order).deliver
     end
